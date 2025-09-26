@@ -1,0 +1,23 @@
+[workspace.package]
+description = ""
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+readme = "README.md"
+authors = ["Joshua Auchincloss <joshua.auchincloss@proton.me>"]
+repository = "https://github.com/joshua-auchincloss/by-env.git"
+
+
+[workspace]
+members = ["by-env", "macros"]
+resolver = "3"
+
+[workspace.dependencies]
+proc-macro2 = "1"
+quote = "1"
+syn = "2"
+
+# dev-deps
+criterion = "0.7"
+trybuild = "1"
+test-case = "3"

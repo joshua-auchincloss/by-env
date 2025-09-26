@@ -1,0 +1,8 @@
+error[E0599]: no function or associated item named `prod_only` found for struct `envs::Dev` in the current scope
+  --> tests/failures/missing_impl.rs:27:8
+   |
+14 |     #[derive(Env)]
+   |              --- function or associated item `prod_only` not found for this struct
+...
+27 |     fn prod_only() -> i64 {
+   |        ^^^^^^^^^ function or associated item not found in `envs::Dev`

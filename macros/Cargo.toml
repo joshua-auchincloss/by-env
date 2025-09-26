@@ -1,0 +1,23 @@
+[package]
+name = "by-env-macros"
+
+description.workspace = true
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+readme.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[lib]
+proc-macro = true
+
+[dependencies]
+darling = "*"
+convert_case = "0.8"
+proc-macro2.workspace = true
+quote.workspace = true
+syn = { workspace = true, features = ["full"] }
+
+[dev-dependencies]
+test-case = "*"

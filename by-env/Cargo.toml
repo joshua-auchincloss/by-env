@@ -1,0 +1,25 @@
+[package]
+name = "by-env"
+
+description.workspace = true
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+readme.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+
+[[bench]]
+name = "basic-perf"
+harness = false
+
+[lib]
+
+[dependencies]
+by-env-macros = { path = "../macros" }
+
+[dev-dependencies]
+criterion = { workspace = true, features = ["html_reports"] }
+trybuild.workspace = true
+test-case.workspace = true
