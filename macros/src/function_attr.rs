@@ -1,15 +1,8 @@
-
 use proc_macro2::TokenStream;
 use quote::ToTokens;
-use syn::{
-    FnArg, Ident, Pat, Visibility,
-};
+use syn::{FnArg, Ident, Pat, Visibility};
 
-use crate::{
-    env_attr::Args,
-    fn_stream::Stream,
-    ident,
-};
+use crate::{env_attr::Args, fn_stream::Stream, ident};
 
 fn name_of_arg(arg: &FnArg) -> Ident {
     match arg {
