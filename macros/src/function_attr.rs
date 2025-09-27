@@ -13,7 +13,7 @@ use crate::{
 
 fn name_of_arg(arg: &FnArg) -> Ident {
     match arg {
-        FnArg::Receiver(..) => ident(format!("self")),
+        FnArg::Receiver(..) => ident("self".to_string()),
         FnArg::Typed(ty) => {
             if let Pat::Ident(i) = ty.pat.as_ref() {
                 i.ident.clone()

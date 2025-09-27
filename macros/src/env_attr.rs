@@ -147,9 +147,9 @@ impl Args {
     }
 }
 
-impl Into<Attribute> for Args {
-    fn into(self) -> Attribute {
-        let envs = &self.envs;
+impl From<Args> for Attribute {
+    fn from(val: Args) -> Self {
+        let envs = &val.envs;
         Attribute {
             pound_token: token::Pound::default(),
             style: syn::AttrStyle::Outer,
@@ -212,9 +212,10 @@ impl Parse for ArgsMeta {
     }
 }
 
+#[allow(clippy::large_enum_variant)]
 pub enum EnvStreams {
-    Function(fn_stream::Stream),
     Impl(impl_attr::ImplItems),
+    Function(fn_stream::Stream),
 }
 
 impl Parse for EnvStreams {
@@ -228,15 +229,15 @@ impl Parse for EnvStreams {
 }
 
 pub enum EnvAttr {
-    Function(ByEnv),
     Impl(ByImpl),
+    Function(Box<ByEnv>),
 }
 
 impl ToTokens for EnvAttr {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         match self {
-            Self::Function(env) => env.to_tokens(tokens),
             Self::Impl(strc) => strc.to_tokens(tokens),
+            Self::Function(env) => env.to_tokens(tokens),
         }
     }
 }
@@ -246,7 +247,10 @@ impl EnvAttr {
         let args: Args = syn::parse2(atts)?;
         let stream: EnvStreams = syn::parse2(stream)?;
         Ok(match stream {
-            EnvStreams::Function(func) => Self::Function(ByEnv::new(args, func)),
+            EnvStreams::Function(func) => {
+                disallow(&args.envs, "supercede", "fn", &args, |a| a.supercede)?;
+                Self::Function(Box::new(ByEnv::new(args, func)))
+            }
             EnvStreams::Impl(strc) => {
                 disallow(&args.envs, "supercede", "impl", &args, |a| a.supercede)?;
                 Self::Impl(ByImpl::new(args, strc))

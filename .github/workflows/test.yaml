@@ -8,11 +8,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-# easier to get repo started
-# todo: remove before publication
-env:
-  RUSTFLAGS: "-Awarnings"
-
 jobs:
   test:
     name: Test

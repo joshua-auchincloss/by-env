@@ -64,8 +64,8 @@ impl Envs {
                 Self::#name => #name::$f($($($arg,)*)?).await,
             });
 
-            let macro_name = macro_name(&name);
-            let nonp_macro = macro_name_nonp(&name);
+            let macro_name = macro_name(name);
+            let nonp_macro = macro_name_nonp(name);
 
             env_use.extend(quote::quote!(
                 pub(crate) use __by_env::#macro_name;
